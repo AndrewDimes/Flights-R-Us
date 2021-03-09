@@ -38,7 +38,7 @@ const flightSchema = new Schema({
         type: Date,
         required: true,
         default: function() {
-            return new Date().getFullYear() + 1;
+            return new Date();
         },
     }   
   }, {

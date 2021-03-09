@@ -9,12 +9,14 @@ module.exports = {
   };
 
   function show(req, res) {
-    console.log(req.params.id, 'THIS IS REQ PARAMS ID')
     Flight.findById(req.params.id, function(err, flight) {
+        console.log(flight.departs)
+        const dt = flight.departs
+        const departsDate = dt.toISOString().slice(0,16);
+
         Ticket.find({flight: flight._id}, function(err, tickets) {
-            console.log(tickets,'tickets here')
             res.render('flights/show', {
-                title: 'Flight Detail', flight, tickets
+                title: 'Flight Detail', flight, tickets, departsDate
             });
         });
     });
@@ -42,8 +44,12 @@ module.exports = {
   function newFlight(req, res) {
       const newFlight = new Flight()
       const dt = newFlight.departs
+      const year = dt.getFullYear();
+      const month = dt.getMonth();
+      const day = dt.getDate();
+      const c = new Date(year+1,month,day);
       console.log('dt', dt)
-      const departsDate = dt.toISOString().slice(0,16);
+      const departsDate = c.toISOString().slice(0,16);
       console.log('here',departsDate)
       res.render('flights/new', {departsDate});
 }
