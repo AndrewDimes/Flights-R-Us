@@ -70,14 +70,26 @@
   
 </form>
 <br><h2 class ="text-center">Tickets</h2>
-<div>Tickets:</div>
-<ul>
-  <%- tickets.map(ticket => 
-    `<li>${ticket.seat} <small>${ticket.price}</small></li>`
-  ).join('') %>
-</ul>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>Seat</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tickets.forEach(function(ticket){ %>
+    <tr>
+      <td><%=ticket.seat%></td>
+      <td>$<%=ticket.price%></td>
+    </tr>
+    <% }) %>
+  </tbody>
+  
+</table>
 
-<a href="/flights/<%= flight.id %>/tickets/new">ADD TICKET</a>
+<a class="btn btn-secondary btn-sm" href="/flights/<%= flight.id %>/tickets/new" role="button">ADD TICKET</a>
+
 
 
 

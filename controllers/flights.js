@@ -8,18 +8,19 @@ module.exports = {
     show
   };
 
-  function show(req, res) {
-    Flight.findById(req.params.id, function(err, flight) {
-        console.log(flight.departs)
-        const dt = flight.departs
-        const departsDate = dt.toISOString().slice(0,16);
+  async function show(req, res) {
+      try {
+          const flight = await Flight.findById(req.params.id);
+          const dt = flight.departs
+          const departsDate = dt.toISOString().slice(0,16);
+          const tickets = await Ticket.find({flight: flight._id})
+          res.render('flights/show', {
+            title: 'Flight Detail', flight, tickets, departsDate
+          })
 
-        Ticket.find({flight: flight._id}, function(err, tickets) {
-            res.render('flights/show', {
-                title: 'Flight Detail', flight, tickets, departsDate
-            });
-        });
-    });
+      }catch(err){
+          res.send(err)
+      }
   }
 
   function index(req, res){
