@@ -13,16 +13,43 @@
     </thead>
     <tbody>
       <!-- Write the line of EJS to iterate over movies using forEach -->
+
       <% flights.forEach(function(m){ %>
         <tr>
-          <td><%= m.airline %></td>
-          <td><%= m.airport %></td>
-          <td><%= m.flightNo %></td>
-          <td><%= m.departs%></td>
-          <td><a href="/flights/<%= m.id %>">DETAILS</a></td>
+          <% if(m.departs < today){ %>
+            <td  style="color:red">
+              <%= m.airline %>
+            </td>
+            <td  style="color:red">
+              <%= m.airport %>
+            </td>
+            <td  style="color:red">
+              <%= m.flightNo %>
+            </td>
+            <td style="color:red">
+                <%= m.departs%>
+              </td>
+              <td><p style="color:red" href=>PAST</p></td>
+            <%} else { %>
+              <td>
+                <%=m.airline%>
+              </td>
+              <td>
+                <%=m.airport%>
+              </td>
+              <td>
+                <%=m.flightNo%>
+              </td>
+              <td>
+                <%=m.departs%>
+              </td>
+              <td><a href="/flights/<%= m.id %>">DETAILS</a></td>
+              <% } %>
+              
+               
         </tr>
-      <!-- Close the forEach using EJS here -->
-      <% }) %>
+        <!-- Close the forEach using EJS here -->
+        <% }) %>
     </tbody>
   </table>
   <%- include('../partials/footer') %>

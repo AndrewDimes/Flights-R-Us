@@ -2,7 +2,8 @@ const Flight = require('../models/flight');
 
 
 module.exports = {
-    create
+    create,
+    delete: deleteDestination
 }
 
 async function create(req, res){
@@ -17,4 +18,9 @@ async function create(req, res){
         
 
     }
+}
+
+function deleteDestination(req, res){
+    console.log('test')
+    
 }

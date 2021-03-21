@@ -14,8 +14,14 @@ module.exports = {
           const dt = flight.departs
           const departsDate = dt.toISOString().slice(0,16);
           const tickets = await Ticket.find({flight: flight._id})
+          const destinations = flight.destinations
+          const todaysDate = new Date();
+          todaysDate.setHours(0,0,0,0);
+          destinations.sort(function(a,b){
+              return new Date(a.arrival) - new Date(b.arrival);
+          })
           res.render('flights/show', {
-            title: 'Flight Detail', flight, tickets, departsDate
+            title: 'Flight Detail', flight, tickets, departsDate, todaysDate
           })
 
       }catch(err){
@@ -24,9 +30,16 @@ module.exports = {
   }
 
   function index(req, res){
+      let todaysDate = new Date();
+      todaysDate.setHours(0,0,0,0);
+
       Flight.find({}, function(err, flightDocuments){
+          flightDocuments.sort(function(a,b){
+              return new Date(a.departs) - new Date(b.departs);
+          })
           res.render('flights/index', {
-              flights: flightDocuments
+              flights: flightDocuments,
+              today: todaysDate
           })
       })
   }

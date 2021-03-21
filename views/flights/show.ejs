@@ -39,8 +39,15 @@
     <tbody>
       <% flight.destinations.forEach(function(r) { %>
         <tr>
-          <td><%= r.airport %></td>
-          <td><%= r.arrival %></td>
+          <% if(r.arrival < todaysDate) { %>
+          <td style="color:red"><%= r.airport %></td>
+          <td 
+          style="color:red"><%= r.arrival %><form action="/flights/<%=flight._id%>/destinations/<%=r._id%>?_method=DELETE" method="POST"><button type="submit">x</button></form>
+          </td>
+          <% } else {%>
+            <td><%= r.airport %></td>
+            <td><%= r.arrival %></td>
+            <% } %>
         </tr>
       <% }); %>           
     </tbody>
